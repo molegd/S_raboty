@@ -1,4 +1,34 @@
+# Настройки SMTP-сервера
+$smtpServer = "mail.mfrb.by"
+$smtpTo = @("G600-U115@mfrb.by", "G600-U115@mfrb.by")
 
+# Определяем параметры для отправки писем
+function MailSend ($subj, $pBody, $attachmentPath) {
+    try {
+        $msg = new-object System.Net.Mail.MailMessage
+        $smtpTo | ForEach-Object {$msg.To.Add($_)}
+        $msg.From = $env:computername +' <'+$env:computername+'@mfrb.by>'
+        $msg.Subject = $subj
+        $msg.IsBodyHtml = $true
+        $msg.Body = '<html><body><p><b>Хост скрипта:</b> '+$env:computername+'</п><p>'+$pBody+'</font></b></p></body></html>'
+        
+        # Проверяем существование файла
+        if (Test-Path -Path $attachmentPath) {
+            Write-Host "Файл вложения найден: $attachmentPath"
+            $attachment = New-Object System.Net.Mail.Attachment($attachmentPath)
+            $msg.Attachments.Add($attachment)
+        } else {
+            Write-Host "Файл вложения не найден: $attachmentPath"
+        }
+
+        $smtp = new-object System.Net.Mail.SmtpClient
+        $smtp.host = $smtpServer
+        $smtp.Send($msg)
+        Write-Host "Письмо успешно отправлено."
+    } catch {
+        Write-Host "Ошибка при отправке письма: $_"
+    }
+}
 
 
 # Отправляем письмо с результатами
