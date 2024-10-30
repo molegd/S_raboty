@@ -1,6 +1,6 @@
 # Настройки SMTP-сервера
 $smtpServer = "mail.mfrb.by"
-$smtpTo = @("G600-U115@mfrb.by", "G600-U115@mfrb.by")
+$smtpTo = @("G@m.by", "G6@m.by")
 
 # Определяем параметры для отправки писем
 function MailSend ($subj, $pBody, $attachmentPath) {
