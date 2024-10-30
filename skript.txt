@@ -1,0 +1,12 @@
+
+
+
+# Отправляем письмо с результатами
+if (Test-Path -Path $resultsFile) {
+    $subject = "Состояние бэкапов: $overallStatus"
+    $body = "Вложенный файл содержит результаты проверки бэкапов."
+    MailSend -subj $subject -pBody $body -attachmentPath $resultsFile
+    Write-Host "Результаты отправлены на адреса: $smtpTo"
+} else {
+    Write-Host "Файл результатов не найден."
+}
