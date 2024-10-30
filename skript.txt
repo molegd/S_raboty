@@ -2,6 +2,8 @@
 $smtpServer = "mail.mfrb.by"
 $smtpTo = @("G@m.by", "G6@m.by")
 
+
+
 # Определяем параметры для отправки писем
 function MailSend ($subj, $pBody, $attachmentPath) {
     try {
